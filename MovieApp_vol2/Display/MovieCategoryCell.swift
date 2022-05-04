@@ -12,7 +12,6 @@ import MovieAppData
 class MovieCategoryCell: UITableViewCell {
     static let identifier = "MovieCategoryCell"
     
-    
     private var moviePosterUrls: [URL]!
     private var index: Int = 0
     
@@ -44,6 +43,27 @@ class MovieCategoryCell: UITableViewCell {
         contentView.addSubview(categoryName)
         contentView.addSubview(navBar)
         contentView.addSubview(movieList)
+        
+        addConstraints()
+        styleView()
+    }
+    
+    private func addConstraints() {
+        categoryName.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
+        categoryName.autoPinEdge(toSuperviewEdge: .top, withInset: 15)
+        
+        navBar.autoPinEdge(.top, to: .bottom, of: categoryName, withOffset: 10)
+        navBar.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
+        
+        movieList.autoPinEdge(.top, to: .bottom, of: navBar, withOffset: 10)
+        movieList.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
+        movieList.autoPinEdge(toSuperviewEdge: .trailing, withInset: 15)
+        movieList.autoPinEdge(toSuperviewEdge: .bottom, withInset: 15)
+    }
+    
+    private func styleView() {
+        movieList.showsVerticalScrollIndicator = false
+        movieList.showsHorizontalScrollIndicator = false
     }
     
     required init?(coder: NSCoder) {
@@ -61,6 +81,7 @@ class MovieCategoryCell: UITableViewCell {
         navBar.tintColor = UIColor(red: 0.043, green: 0.145, blue: 0.247, alpha: 1)
         
         moviePosterUrls = imageURLs
+        print(moviePosterUrls)
     }
     
     override func prepareForReuse() {
@@ -73,21 +94,6 @@ class MovieCategoryCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        categoryName.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
-        categoryName.autoPinEdge(toSuperviewEdge: .top, withInset: 15)
-        
-        navBar.autoPinEdge(.top, to: .bottom, of: categoryName, withOffset: 10)
-        navBar.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
-        
-        movieList.autoPinEdge(.top, to: .bottom, of: navBar, withOffset: 10)
-        movieList.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
-        movieList.autoPinEdge(toSuperviewEdge: .trailing, withInset: 15)
-        movieList.autoPinEdge(toSuperviewEdge: .bottom, withInset: 15)
-        
-        movieList.showsVerticalScrollIndicator = false
-        movieList.showsHorizontalScrollIndicator = false
-
     }
     
 }
@@ -102,12 +108,7 @@ extension MovieCategoryCell : UICollectionViewDataSource {
             withReuseIdentifier: MoviePosterCell.identifier,
             for: indexPath) as? MoviePosterCell else { return UICollectionViewCell() }
         
-        if (index < moviePosterUrls.count) {
-            
-            cell.configure(imageUrl: moviePosterUrls[index])
-            index += 1
-            
-        }
+        cell.configure(imageUrl: moviePosterUrls[indexPath.row])
         
         return cell
     }

@@ -11,6 +11,8 @@ import Foundation
 
 class InitialMovieListController : UIViewController {
     var tableView: UITableView!
+    private var movies = [MovieCategory : [Movie]]()
+    private let networkService = NetworkService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +20,12 @@ class InitialMovieListController : UIViewController {
         createViews()
         addConstraints()
         styleViews()
+
+        fetchMovieData()
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     private func createViews() {
@@ -36,23 +44,22 @@ class InitialMovieListController : UIViewController {
     private func styleViews() {
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
+        
         tableView.showsLargeContentViewer = false
         tableView.separatorStyle = .none
-        
     }
     
-    private func getPosterUrlsForCategory(category: MovieGroup) -> [URL] {
+    private func getPosterUrlsForCategory(movies: [Movie]) -> [URL] {
         var urls: [URL] = []
+        let base = "https://image.tmdb.org/t/p/original"
         
-        for movie in Movies.all() {
-            if (movie.group.contains(category)) {
-                urls.append(URL(string: movie.imageUrl)!)
-            }
+        for movie in movies {
+            urls.append(URL(string: base + movie.posterPath)!)
         }
-            return urls
+        return urls
     }
     
-    private func findItemsForCategory(category: MovieGroup) -> [String] {
+    private func findItemsForCategory(category: MovieCategory) -> [String] {
         
         var items: [String] = []
         switch (category) {
@@ -62,7 +69,7 @@ class InitialMovieListController : UIViewController {
             items.append("For Rent")
             items.append("In theatres")
             break
-        case .freeToWatch:
+        case .topRated:
             items.append("Movies")
             items.append("TV")
             break
@@ -70,25 +77,20 @@ class InitialMovieListController : UIViewController {
             items.append("Today")
             items.append("This week")
             break
-        case .topRated:
+        case .recommended:
             items.append("This week")
             items.append("All time")
-            break
-        case .upcoming:
-            items.append("Action")
-            items.append("Horror")
-            items.append("Comedy")
             break
         }
        
         return items
     }
     
-    private func configureCell(cell: MovieCategoryCell, category: MovieGroup, subcategories: [String], urls: [URL]) {
+    private func configureCell(cell: MovieCategoryCell, category: MovieCategory, subcategories: [String], urls: [URL]) {
         
         switch (category) {
-        case .freeToWatch:
-            cell.configure(category: "Free to Watch", navigationBarItems: subcategories, imageURLs: urls)
+        case .trending:
+            cell.configure(category: "Trending", navigationBarItems: subcategories, imageURLs: urls)
             break
             
         case .popular:
@@ -99,13 +101,43 @@ class InitialMovieListController : UIViewController {
             cell.configure(category: "Top Rated", navigationBarItems: subcategories, imageURLs: urls)
             break
             
-        case .upcoming:
-            cell.configure(category: "Upcoming", navigationBarItems: subcategories, imageURLs: urls)
+        case .recommended:
+            cell.configure(category: "Recommended", navigationBarItems: subcategories, imageURLs: urls)
             break
             
-        case .trending:
-            cell.configure(category: "Trending", navigationBarItems: subcategories, imageURLs: urls)
-            break
+        }
+    }
+    
+    func fetchMovieData() {
+        
+        for movieCategory in MovieCategory.allCases {
+            let request = NetworkService.makeUrlRequest(category: movieCategory)
+            
+            if (movieCategory == .trending) {
+                continue
+            }
+            
+            networkService.executeUrlRequest(request) {
+                (result: Result<ModelMovie, RequestError>) in
+                switch result {
+                case .success(_):
+                    do {
+                        self.movies[movieCategory] = try result.get().results
+                    }
+                    catch {
+                        print("Error")
+                    }
+                    
+                case .failure(let fail):
+                    print("Fail \(fail)")
+                }
+                
+            }
+            
+        }
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
         
     }
@@ -119,7 +151,7 @@ extension InitialMovieListController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MovieGroup.allCases.count
+        return 4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -128,12 +160,29 @@ extension InitialMovieListController : UITableViewDataSource {
                                                         return UITableViewCell()
         }
         
-        let categoryName = MovieGroup.allCases[indexPath.row]
-        let subcategories: [String] = findItemsForCategory(category: categoryName)
-        let urls = getPosterUrlsForCategory(category: categoryName)
+        var category: MovieCategory
+        switch(indexPath.row) {
+        case 0:
+            category = .recommended
+            break
+            
+        case 1:
+            category = .popular
+            break
+            
+        case 2:
+            category = .topRated
+            
+        default:
+            category = .trending
+        }
         
-        configureCell(cell: cell, category: categoryName, subcategories: subcategories, urls: urls)
-    
+        let urls: [URL] = getPosterUrlsForCategory(movies: movies[category] ?? [])
+        print(urls)
+        
+        let subcategories: [String] = self.findItemsForCategory(category: category)
+        configureCell(cell: cell, category: category, subcategories: subcategories, urls: urls)
+        
         return cell
     }
     

@@ -4,8 +4,12 @@ import MovieAppData
 
 class MovieListViewController: UIViewController, UISearchBarDelegate {
     var searchBar: UISearchBar!
-    var initialMovieList: InitialMovieListController!
-    var searchMovieList: SearchMovieController!
+    
+    static var initialMovieList: InitialMovieListController!
+    static var searchMovieList: SearchMovieController!
+    static var movieDetails: MovieDetailsController!
+    
+    var networkService: NetworkService = NetworkService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,15 +23,20 @@ class MovieListViewController: UIViewController, UISearchBarDelegate {
     }
     
     private func addControllers() {
-        initialMovieList = InitialMovieListController()
-        searchMovieList = SearchMovieController()
-        searchMovieList.view.isHidden = true
+        MovieListViewController.initialMovieList = InitialMovieListController()
+        MovieListViewController.searchMovieList = SearchMovieController()
+        MovieListViewController.movieDetails = MovieDetailsController()
         
-        view.addSubview(initialMovieList.view)
-        view.addSubview(searchMovieList.view)
+        MovieListViewController.searchMovieList.view.isHidden = true
+        MovieListViewController.movieDetails.view.isHidden = true
+        
+        view.addSubview(MovieListViewController.initialMovieList.view)
+        view.addSubview(MovieListViewController.searchMovieList.view)
+        view.addSubview(MovieListViewController.movieDetails.view)
                 
-        addChild(initialMovieList)
-        addChild(searchMovieList)
+        addChild(MovieListViewController.initialMovieList)
+        addChild(MovieListViewController.searchMovieList)
+        addChild(MovieListViewController.movieDetails)
     }
     
     private func createViews() {
@@ -35,9 +44,6 @@ class MovieListViewController: UIViewController, UISearchBarDelegate {
         searchBar.delegate = self
 
         view.addSubview(searchBar)
-        
-//        searchBar.searchTextField.addTarget(self, action: #selector(switchViews), for: .touchUpInside)
-//        searchBar.searchTextField.addTarget(self, action: #selector(switchViews), for: .touchUpOutside)
     }
     
     private func addConstraints() {
@@ -47,16 +53,22 @@ class MovieListViewController: UIViewController, UISearchBarDelegate {
         searchBar.autoPinEdge(toSuperviewEdge: .trailing, withInset: 19)
         
         // initialMovieList constraints
-        initialMovieList.view.autoPinEdge(.top, to: .bottom, of: searchBar, withOffset: 8)
-        initialMovieList.view.autoPinEdge(toSuperviewEdge: .leading)
-        initialMovieList.view.autoPinEdge(toSuperviewEdge: .trailing)
-        initialMovieList.view.autoPinEdge(toSuperviewEdge: .bottom)
+        MovieListViewController.initialMovieList.view.autoPinEdge(.top, to: .bottom, of: searchBar, withOffset: 8)
+        MovieListViewController.initialMovieList.view.autoPinEdge(toSuperviewEdge: .leading)
+        MovieListViewController.initialMovieList.view.autoPinEdge(toSuperviewEdge: .trailing)
+        MovieListViewController.initialMovieList.view.autoPinEdge(toSuperviewEdge: .bottom)
         
         // searchMovieList constraints
-        searchMovieList.view.autoPinEdge(.top, to: .bottom, of: searchBar, withOffset: 8)
-        searchMovieList.view.autoPinEdge(toSuperviewEdge: .leading)
-        searchMovieList.view.autoPinEdge(toSuperviewEdge: .trailing)
-        searchMovieList.view.autoPinEdge(toSuperviewEdge: .bottom)
+        MovieListViewController.searchMovieList.view.autoPinEdge(.top, to: .bottom, of: searchBar, withOffset: 8)
+        MovieListViewController.searchMovieList.view.autoPinEdge(toSuperviewEdge: .leading)
+        MovieListViewController.searchMovieList.view.autoPinEdge(toSuperviewEdge: .trailing)
+        MovieListViewController.searchMovieList.view.autoPinEdge(toSuperviewEdge: .bottom)
+        
+        // movieDetails contstraints
+        MovieListViewController.movieDetails.view.autoPinEdge(toSuperviewEdge: .top)
+        MovieListViewController.movieDetails.view.autoPinEdge(toSuperviewEdge: .leading)
+        MovieListViewController.movieDetails.view.autoPinEdge(toSuperviewEdge: .trailing)
+        MovieListViewController.movieDetails.view.autoPinEdge(toSuperviewEdge: .bottom)
     }
     
     private func styleViews() {
@@ -92,46 +104,33 @@ class MovieListViewController: UIViewController, UISearchBarDelegate {
     
     // search bar actions
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        initialMovieList.view.isHidden = true
-        searchMovieList.view.isHidden = false
-        
-//        present(vc, animated: true, completion: nil)
+        MovieListViewController.initialMovieList.view.isHidden = true
+        MovieListViewController.searchMovieList.view.isHidden = false
+        MovieListViewController.movieDetails.view.isHidden = true
         
         searchBar.setShowsCancelButton(true, animated: true)
-        print("Began editing")
     }
     
     // ne radi
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        initialMovieList.view.isHidden = false
-        searchMovieList.view.isHidden = true
+        MovieListViewController.initialMovieList.view.isHidden = false
+        MovieListViewController.searchMovieList.view.isHidden = true
+        MovieListViewController.movieDetails.view.isHidden = true
 
         searchBar.setShowsCancelButton(false, animated: true)
-        print("Ended editing")
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
-        initialMovieList.view.isHidden = false
-        searchMovieList.view.isHidden = true
-
+        
         searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.resignFirstResponder()
     }
-
     
-//    @objc
-//    func switchViews() {
-//
-////        if (initialMovieList.view.isHidden) {
-//            initialMovieList.view.isHidden = false
-//            searchMovieList.view.isHidden = true
-////        } else {
-////            initialMovieList.view.isHidden = true
-////            searchMovieList.view.isHidden = false
-////        }
-//
-//        print("Views switched")
-//    }
-    
+    func showDetailsPage() {
+        MovieListViewController.initialMovieList.view.isHidden = true
+        MovieListViewController.searchMovieList.view.isHidden = true
+        MovieListViewController.movieDetails.view.isHidden = false
+    }
     
 }

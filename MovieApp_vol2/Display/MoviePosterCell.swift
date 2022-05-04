@@ -27,8 +27,23 @@ class MoviePosterCell : UICollectionViewCell {
         contentView.addSubview(poster)
         contentView.addSubview(favoriteButton)
         
+        addConstraints()
+        styleView()
+    }
+    
+    private func addConstraints() {
+        poster.autoPinEdgesToSuperviewEdges()
+        
+        favoriteButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 9)
+        favoriteButton.autoPinEdge(toSuperviewEdge: .top, withInset: 9)
+        favoriteButton.autoSetDimensions(to: CGSize(width: 32, height: 32))
+    }
+    
+    private func styleView() {
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 8
+        
+        contentView.clipsToBounds = true
     }
     
     required init?(coder: NSCoder) {
@@ -41,22 +56,30 @@ class MoviePosterCell : UICollectionViewCell {
     }
     
     public func configure(imageUrl: URL) {
-        if let imageData = try? Data(contentsOf: imageUrl) {
-            if UIImage(data: imageData) != nil {
-                poster.image = UIImage(data: imageData)
+        URLSession.shared.dataTask(with: imageUrl) { (data, response, error) in
+            
+            if let error = error {
+                print("DataTask error: \(error.localizedDescription)")
+                return
             }
-        }
+            
+            guard let data = data else {
+                print("Empty data")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                if let image = UIImage(data: data) {
+                    self.poster.image = image
+                }
+            }
+            
+        }.resume()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        poster.autoPinEdgesToSuperviewEdges()
-        poster.layer.cornerRadius = 10
-        
-        favoriteButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 9)
-        favoriteButton.autoPinEdge(toSuperviewEdge: .top, withInset: 9)
-        favoriteButton.autoSetDimensions(to: CGSize(width: 32, height: 32))
+            
     }
     
 }
