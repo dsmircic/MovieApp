@@ -11,19 +11,21 @@ import UIKit
 
 class MoviePosterCell : UICollectionViewCell {
     
-    public let poster: UIImageView = {
+    private let poster: UIImageView = {
         return UIImageView()
     }()
-    public let favoriteButton: UIImageView = {
+    private let favoriteButton: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "heart.circle.fill"))
         imageView.tintColor = UIColor(red: 0.043, green: 0.145, blue: 0.247, alpha: 0.65)
         return imageView
     }()
     
     public static let identifier: String = "MoviePosterID"
+    private var id: Int = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         contentView.addSubview(poster)
         contentView.addSubview(favoriteButton)
         
@@ -52,10 +54,11 @@ class MoviePosterCell : UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-//        poster.image = nil
+        
+        poster.image = nil
     }
     
-    public func configure(imageUrl: URL) {
+    public func configure(imageUrl: URL, id: Int) {
         URLSession.shared.dataTask(with: imageUrl) { (data, response, error) in
             
             if let error = error {
@@ -75,6 +78,8 @@ class MoviePosterCell : UICollectionViewCell {
             }
             
         }.resume()
+        
+        self.id = id
     }
     
     override func layoutSubviews() {

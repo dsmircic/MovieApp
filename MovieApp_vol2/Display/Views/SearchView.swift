@@ -56,7 +56,7 @@ class SearchView : UIView {
     }
     
     public func configure(imageURL: URL, title: String, description: String) {
-        URLSession.shared.dataTask(with: imageURL) { data, response, error in
+        URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
             
             if let error = error {
                 print("DataTask error \(error.localizedDescription)")
@@ -79,6 +79,7 @@ class SearchView : UIView {
         
         movieTitle.text = title
         movieDescription.text = description
+    
     }
     
     private func styleViews() {
