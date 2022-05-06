@@ -68,10 +68,16 @@ class MovieCategoryCell: UITableViewCell {
         }
     }
     
+    /**
+     Sets the navigation controller for the view so it can navigate to the movie details page.
+     */
     public func setNavigationController(controller: UIViewController) {
         navigationController = controller
     }
     
+    /**
+     Configures the view's layout.
+     */
     private func addConstraints() {
         categoryName.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
         categoryName.autoPinEdge(toSuperviewEdge: .top, withInset: 15)
@@ -89,6 +95,9 @@ class MovieCategoryCell: UITableViewCell {
         movieList.autoPinEdge(toSuperviewEdge: .bottom, withInset: 15)
     }
     
+    /**
+     Styles the view.
+     */
     private func styleView() {
         movieList.showsVerticalScrollIndicator = false
         movieList.showsHorizontalScrollIndicator = false
