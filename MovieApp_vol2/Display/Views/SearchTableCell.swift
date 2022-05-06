@@ -9,6 +9,9 @@ import Foundation
 import PureLayout
 import UIKit
 
+/**
+ Stores movie poster images, movie descriptions and movie titles.
+ */
 class SearchTableCell : UITableViewCell {
     public static let identifier: String = "SearchTableCellID"
     private var movieDescriptionContainer: SearchView = SearchView()

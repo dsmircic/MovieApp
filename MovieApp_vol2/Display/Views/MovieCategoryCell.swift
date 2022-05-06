@@ -9,12 +9,15 @@ import PureLayout
 import UIKit
 import MovieAppData
 
+/**
+ Table view cell which holds category name, subcategorie names and movie images.
+ */
 class MovieCategoryCell: UITableViewCell {
     static let identifier = "MovieCategoryCell"
     
     private var moviePosterUrls: [URL]!
     private var detailsPage: MovieDetailsController!
-    private var searchController: SearchMovieController!
+    private var navigationController: UIViewController!
     
     private var ids: [Int]!
     
@@ -60,11 +63,14 @@ class MovieCategoryCell: UITableViewCell {
         styleView()
         
         detailsPage = MovieDetailsController()
-        searchController = SearchMovieController()
         
         DispatchQueue.main.async {
             self.movieList.reloadData()
         }
+    }
+    
+    public func setNavigationController(controller: UIViewController) {
+        navigationController = controller
     }
     
     private func addConstraints() {
@@ -90,12 +96,17 @@ class MovieCategoryCell: UITableViewCell {
         
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
+        
+        navBar.backgroundColor = UIColor(red: 0.01, green: 0.01, blue: 0.01, alpha: 0.01)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /**
+     Configures a tableView cell.
+     */
     public func configure(category: String, navigationBarItems: [String], imageURLs: [URL], ids: [Int]) {
         categoryName.text = category
         
@@ -112,8 +123,8 @@ class MovieCategoryCell: UITableViewCell {
         self.ids = ids
     }
     
-    func showDetailsPage(detailsPage: MovieDetailsController) {
-        searchController.showDetailsPage(detailsPage: detailsPage)
+    func showDetailsPage() {
+        navigationController.navigationController?.pushViewController(detailsPage, animated: true)
     }
     
     override func prepareForReuse() {
@@ -155,7 +166,7 @@ extension MovieCategoryCell : UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         detailsPage.configure(id: ids[indexPath.row])
-        showDetailsPage(detailsPage: detailsPage)
+        showDetailsPage()
     }
     
 }

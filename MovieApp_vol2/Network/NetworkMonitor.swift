@@ -8,6 +8,9 @@
 import Foundation
 import Network
 
+/**
+ Monitors app internet connection.
+ */
 final class NetworkMonitor {
     static let shared = NetworkMonitor()
     
@@ -29,6 +32,7 @@ final class NetworkMonitor {
     public func stopMonitoring() {
         monitor.cancel()
     }
+    
     
     public func getConnectionType(path: NWPath) {
         

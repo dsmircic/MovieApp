@@ -40,6 +40,9 @@ class InitialMovieListController : UIViewController {
         }
     }
     
+    /**
+     Checks the network connection periodically. Returns _false_ if the connection isn't valid and displays an alert.
+     */
     private func checkNetworkConnection() {
         if (!NetworkMonitor.shared.isConnected) {
             let dialogMessage = UIAlertController(title: "Attention", message: "It appears you do not have a valid connection to the Internet.", preferredStyle: .alert)
@@ -48,6 +51,9 @@ class InitialMovieListController : UIViewController {
         }
     }
     
+    /**
+     Creates a tab bar control with links to other pages.
+     */
     private func initializeTabBar() {
         tabBar = UITabBarController()
         let search = SearchMovieController()
@@ -56,6 +62,9 @@ class InitialMovieListController : UIViewController {
         tabBar.setViewControllers([search, details], animated: false)
     }
     
+    /**
+     Initializes the navigaiton control view.
+     */
     private func initializeNavigationView() {
         let title = UILabel()
         
@@ -75,6 +84,8 @@ class InitialMovieListController : UIViewController {
         view.addSubview(searchBar)
         
         tableView = UITableView()
+        tableView.allowsSelection = false
+        
         view.addSubview(tableView)
         
         tableView.register(MovieCategoryCell.self, forCellReuseIdentifier: MovieCategoryCell.identifier)
@@ -104,6 +115,7 @@ class InitialMovieListController : UIViewController {
         
         searchBar.tintColor = .systemGray
         searchBar.placeholder = "Search"
+        searchBar.backgroundImage = UIImage()
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -123,6 +135,9 @@ class InitialMovieListController : UIViewController {
         navigationController?.pushViewController(detailsPage, animated: true)
     }
     
+    /**
+     Gets a list of movie URLs for the given category and returns it.
+     */
     private func getPosterUrlsForCategory(movies: [Movie]) -> [URL] {
         var urls: [URL] = []
         let base = "https://image.tmdb.org/t/p/original"
@@ -133,6 +148,9 @@ class InitialMovieListController : UIViewController {
         return urls
     }
     
+    /**
+     Gets a list of URLs for movies in the _trending_ category. (Trending movies have a different JSON file)
+     */
     private func getPosterUrlsForTrending(movies: [TrendingMovie]) -> [URL] {
         var urls: [URL] = []
         let base = "https://image.tmdb.org/t/p/original"
@@ -143,6 +161,9 @@ class InitialMovieListController : UIViewController {
         return urls
     }
     
+    /**
+     Gets a list of subcategories or genres for the given category.
+     */
     private func findItemsForCategory(category: MovieCategory) -> [String] {
         var items: [String] = []
         
@@ -153,6 +174,9 @@ class InitialMovieListController : UIViewController {
         return items.sorted()
     }
     
+    /**
+     Gets a list of movie IDs for the given movie category.
+     */
     private func findIdsForCategory(movies: [Movie]) -> [Int] {
         var items: [Int] = []
         
@@ -163,6 +187,9 @@ class InitialMovieListController : UIViewController {
         return items
     }
     
+    /**
+     Gets a list of movie IDs for trending movies.
+     */
     private func findIdsForTrending() -> [Int] {
         var items: [Int] = []
         
@@ -173,6 +200,9 @@ class InitialMovieListController : UIViewController {
         return items
     }
     
+    /**
+     Configures a tableView cell with the given parameters.
+     */
     private func configureCell(cell: MovieCategoryCell, category: MovieCategory, subcategories: [String], urls: [URL], ids: [Int]) {
         
         switch (category) {
@@ -195,6 +225,9 @@ class InitialMovieListController : UIViewController {
         }
     }
     
+    /**
+     Fetches genre data and stores it into a class variable _genres_.
+     */
     func fetchGenreData() {
         let req = NetworkService.makeUrlRequest(category: .genres)
         networkService.executeUrlRequest(req) {
@@ -216,8 +249,10 @@ class InitialMovieListController : UIViewController {
         }
     }
     
+    /**
+     Fetches movie data for all movie categories and stores into a class dictionary variable _movies_.
+     */
     func fetchMovieData() {
-        
         for movieCategory in MovieCategory.allCases {
             let request = NetworkService.makeUrlRequest(category: movieCategory)
             
@@ -277,8 +312,9 @@ extension InitialMovieListController : UITableViewDataSource {
                                                         return UITableViewCell()
         }
         
+        cell.setNavigationController(controller: self)
         var category: MovieCategory
-        
+
         switch(indexPath.row) {
         case 0:
             category = .recommended

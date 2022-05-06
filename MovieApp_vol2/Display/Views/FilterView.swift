@@ -27,10 +27,20 @@ class FilterView: UIView {
         }
     }
     
-//    func addElements(titles: [String]) {
-//        for i in 0...titles.count - 1 {
-//            elements[i].tit“ = titles[i]
-//        }
-//    }
+    private func setSelected() {
+        
+    }
+    
+    func addElements(titles: [String]) {
+        var button: UIButton
+        
+        for i in 0...titles.count - 1 {
+            button = UIButton()
+            button.setTitle(titles[i], for: .normal)
+            elements.append(button)
+        }
+        
+        elements[selected].setTitleColor(UIColor(red: 0.043, green: 0.145, blue: 0.247, alpha: 1), for: .normal)
+    }
     
 }

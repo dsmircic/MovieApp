@@ -13,6 +13,7 @@
 		1074AF0F28233615007A2A69 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1074AF0E28233615007A2A69 /* FilterView.swift */; };
 		1074AF1128234BAA007A2A69 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1074AF1028234BAA007A2A69 /* NetworkMonitor.swift */; };
 		1074AF1528243502007A2A69 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1074AF1428243502007A2A69 /* TabBarController.swift */; };
+		1074AF172825417C007A2A69 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1074AF162825417C007A2A69 /* FavoritesViewController.swift */; };
 		10B2530B27FE4C1700E74243 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B2530A27FE4C1700E74243 /* AppDelegate.swift */; };
 		10B2530D27FE4C1700E74243 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B2530C27FE4C1700E74243 /* SceneDelegate.swift */; };
 		10B2531227FE4C1700E74243 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10B2531027FE4C1700E74243 /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 		1074AF0E28233615007A2A69 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		1074AF1028234BAA007A2A69 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		1074AF1428243502007A2A69 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		1074AF162825417C007A2A69 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		10B2530727FE4C1700E74243 /* MovieApp_vol2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp_vol2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B2530A27FE4C1700E74243 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		10B2530C27FE4C1700E74243 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				10B2534C27FF583700E74243 /* SearchMovieListController.swift */,
 				1074AF0C2821DEF7007A2A69 /* MovieDetailsController.swift */,
 				1074AF1428243502007A2A69 /* TabBarController.swift */,
+				1074AF162825417C007A2A69 /* FavoritesViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				10B25355280065C900E74243 /* SearchTableCell.swift in Sources */,
 				10B2534D27FF583700E74243 /* SearchMovieListController.swift in Sources */,
 				1074AF0D2821DEF7007A2A69 /* MovieDetailsController.swift in Sources */,
+				1074AF172825417C007A2A69 /* FavoritesViewController.swift in Sources */,
 				1074AF1128234BAA007A2A69 /* NetworkMonitor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

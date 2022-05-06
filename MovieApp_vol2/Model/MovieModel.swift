@@ -4,11 +4,10 @@
 //
 //  Created by Dino Smirčić on 02.05.2022..
 //
-
 import Foundation
 
 struct ModelMovie: Codable {
-    let page: Int
+    let page: Int?
     let results: [Movie]
     let totalPages: Int
     let totalResults: Int

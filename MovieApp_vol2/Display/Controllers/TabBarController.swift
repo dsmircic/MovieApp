@@ -9,16 +9,29 @@ import Foundation
 import UIKit
 class TabBarController: UITabBarController {
     private var initial: InitialMovieListController!
-    private var search: SearchMovieController!
-    private var details: MovieDetailsController!
+    private var favorites: FavoritesViewController!
     
     override func viewDidLoad() {
-        initial = InitialMovieListController()
-        search = SearchMovieController()
-        details = MovieDetailsController()
-        
+        createViews()
         styleView()
-        initializeNavigationView()
+    }
+    
+    private func createViews() {
+        initial = InitialMovieListController()
+        favorites = FavoritesViewController()
+        
+        self.viewControllers = [
+            initializeTabBar(title: "Home", image: UIImage(systemName: "house") ?? .add, viewController: initial),
+            initializeTabBar(title: "Favorites", image: UIImage(systemName: "star") ?? .add, viewController: favorites)
+        ]
+    }
+    
+    private func initializeTabBar(title: String, image: UIImage, viewController: UIViewController) -> UINavigationController {
+        
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.tabBarItem = UITabBarItem(title: title, image: image, selectedImage: image)
+        
+        return navigationController
     }
     
     private func styleView() {

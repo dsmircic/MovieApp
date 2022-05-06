@@ -120,25 +120,25 @@ class MovieDetailsController : UIViewController {
     
     private let starButton: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "star.circle.fill"))
-        imageView.tintColor = UIColor(red: 0.043, green: 0.145, blue: 0.247, alpha: 1)
+        imageView.tintColor = .systemGray
         return imageView
     }()
     
     private let heartButton: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "heart.circle.fill"))
-        imageView.tintColor = UIColor(red: 0.043, green: 0.145, blue: 0.247, alpha: 1)
+        imageView.tintColor = .systemGray
         return imageView
     }()
     
     private let tabsButton: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "line.3.horizontal.circle.fill"))
-        imageView.tintColor = UIColor(red: 0.043, green: 0.145, blue: 0.247, alpha: 1)
+        imageView.tintColor = .systemGray
         return imageView
     }()
     
     private let bookmarkButton: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "bookmark.circle.fill"))
-        imageView.tintColor = UIColor(red: 0.043, green: 0.145, blue: 0.247, alpha: 1)
+        imageView.tintColor = .systemGray
         return imageView
     }()
     
@@ -148,6 +148,7 @@ class MovieDetailsController : UIViewController {
         super.viewDidLoad()
         
         initialize()
+        initializeNavigationView()
         
         createView()
         addConstraints()
@@ -160,6 +161,16 @@ class MovieDetailsController : UIViewController {
         topView = UIView()
         bottomView = UIView()
 
+    }
+    
+    private func initializeNavigationView() {
+        let title = UILabel()
+        
+        title.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
+        title.text = "TMDB"
+        title.textColor = .systemGreen
+        
+        navigationItem.titleView = title
     }
     
     private func configureText() {

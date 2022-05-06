@@ -9,6 +9,9 @@ import PureLayout
 import MovieAppData
 import UIKit
 
+/**
+ Stores movie poster images and a favorite button.
+ */
 class MoviePosterCell : UICollectionViewCell {
     
     private let poster: UIImageView = {
@@ -16,7 +19,7 @@ class MoviePosterCell : UICollectionViewCell {
     }()
     private let favoriteButton: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "heart.circle.fill"))
-        imageView.tintColor = UIColor(red: 0.043, green: 0.145, blue: 0.247, alpha: 0.65)
+        imageView.tintColor = .systemGray
         return imageView
     }()
     

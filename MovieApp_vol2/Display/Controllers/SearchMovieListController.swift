@@ -20,6 +20,8 @@ class SearchMovieController : UIViewController {
         super.viewDidLoad()
         
         loadMovies()
+        
+        initializeNavigationView()
 
         createViews()
         addConstraints()
@@ -31,6 +33,19 @@ class SearchMovieController : UIViewController {
         
     }
     
+    private func initializeNavigationView() {
+        let title = UILabel()
+        
+        title.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
+        title.text = "TMDB"
+        title.textColor = .systemGreen
+        
+        navigationItem.titleView = title
+    }
+    
+    /**
+     Initializes views.
+     */
     private func createViews() {
         tableView = UITableView()
         searchBar = UISearchBar()
@@ -69,14 +84,19 @@ class SearchMovieController : UIViewController {
         searchBar.setShowsCancelButton(true, animated: false)
         searchBar.tintColor = .systemGray
         searchBar.placeholder = "Search"
-        searchBar.backgroundImage = .none
+        searchBar.backgroundImage = UIImage()
     }
     
-    func showDetailsPage(detailsPage: MovieDetailsController) {
-        self.detailsPage = detailsPage
+    /**
+     Shows details about the movie on a different screen.
+     */
+    func showDetailsPage() {
         navigationController?.pushViewController(detailsPage, animated: true)
     }
     
+    /**
+     Loads movie data for all movie categories and stores it into a class variable list _movies_.
+     */
     private func loadMovies() {
         let networkService = NetworkService()
         
@@ -136,12 +156,12 @@ extension SearchMovieController : UITableViewDataSource {
 }
 
 extension SearchMovieController : UITableViewDelegate {
-        
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
         detailsPage.configure(id: movies[indexPath.row].id)
-        showDetailsPage(detailsPage: detailsPage)
+        showDetailsPage()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

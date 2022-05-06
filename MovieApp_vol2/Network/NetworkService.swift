@@ -7,9 +7,12 @@
 
 import Foundation
 
+/**
+ Generates URL requests and executes them.
+ */
 class NetworkService {
     private var dataTask: URLSessionDataTask?
-    
+
     func executeUrlRequest<T: Decodable>(_ request: URLRequest, completionHandler: @escaping (Result<T, RequestError>) -> Void) {
         let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
             
@@ -28,16 +31,6 @@ class NetworkService {
                 return
             }
             
-//            let value: T!
-//            do {
-//                value = try JSONDecoder().decode(T.self, from: data)
-//            } catch let DecodingError.typeMismatch(type, context) {
-//                print("Type \(type) mismatch.")
-//                print("Coding path: ", context.codingPath)
-//
-//                completionHandler(.failure(.dataDecodingError))
-//            }
-            
             var value: T!
                 do {
                     value = try JSONDecoder().decode(T.self, from: data)
@@ -46,12 +39,7 @@ class NetworkService {
                     completionHandler(.failure(.dataDecodingError))
                     return
                 }
-            
-//            guard let value = try? JSONDecoder().decode(T.self, from: data) else {
-//                completionHandler(.failure(.dataDecodingError))
-//                return
-//            }
-            
+
             DispatchQueue.main.async {
                 completionHandler(.success(value))
             }
@@ -59,6 +47,9 @@ class NetworkService {
         dataTask.resume()
     }
     
+    /**
+     Generates an URL request for fetching movie data in the given category.
+     */
     public static func makeUrlRequest(category: MovieCategory) -> URLRequest {
         let base = "https://api.themoviedb.org/3"
         let key = "ba92a6994b75de1c153255ddb4932fdf"
