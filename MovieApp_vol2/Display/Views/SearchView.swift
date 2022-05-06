@@ -5,7 +5,9 @@
 //  Created by Dino Smirčić on 08.04.2022..
 //
 import UIKit
-
+/**
+ Displays an overview of all movies when the search bar gets pressed.
+ */
 class SearchView : UIView {
     private var poster: UIImageView = {
         let image = UIImageView()
@@ -44,7 +46,9 @@ class SearchView : UIView {
         styleViews()
     }
     
-    // prepares for reuse
+    /**
+     Prepares the view for reuse, deletes all content from the view.
+     */
     public func deleteContent() {
         poster.image = nil
         movieDescription.text = nil
@@ -55,6 +59,9 @@ class SearchView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /**
+     Configures a view with the given movie poster, movie title and movie description.
+     */
     public func configure(imageURL: URL, title: String, description: String) {
         URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
             
@@ -79,9 +86,11 @@ class SearchView : UIView {
         
         movieTitle.text = title
         movieDescription.text = description
-    
     }
     
+    /**
+     Styles the view.
+     */
     private func styleViews() {
         poster.clipsToBounds = true
         poster.contentMode = .scaleAspectFill
@@ -93,6 +102,9 @@ class SearchView : UIView {
         movieDescription.textColor = UIColor(red: 0.51, green: 0.51, blue: 0.51, alpha: 0.8)
     }
 
+    /**
+     Configures the view's layout.
+     */
     private func addConstraints() {
         poster.autoPinEdge(toSuperviewEdge: .top)
         poster.autoPinEdge(toSuperviewEdge: .leading)

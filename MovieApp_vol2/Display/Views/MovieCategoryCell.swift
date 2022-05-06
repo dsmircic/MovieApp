@@ -7,7 +7,6 @@
 
 import PureLayout
 import UIKit
-import MovieAppData
 
 /**
  Table view cell which holds category name, subcategorie names and movie images.
@@ -123,10 +122,16 @@ class MovieCategoryCell: UITableViewCell {
         self.ids = ids
     }
     
+    /**
+     Displays movie details once the movie poster image gets clicked.
+     */
     func showDetailsPage() {
         navigationController.navigationController?.pushViewController(detailsPage, animated: true)
     }
     
+    /**
+     Prepares the collection view cell for reuse once it gets out of the screen.
+     */
     override func prepareForReuse() {
         super.prepareForReuse()
         categoryName.text = nil

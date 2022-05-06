@@ -33,7 +33,9 @@ final class NetworkMonitor {
         monitor.cancel()
     }
     
-    
+    /**
+     Gets the app's connection type.
+     */
     public func getConnectionType(path: NWPath) {
         
         if (path.usesInterfaceType(.wifi)) {
@@ -48,7 +50,9 @@ final class NetworkMonitor {
         
     }
     
-    
+    /**
+     Contains connection type names.
+     */
     enum Connection {
         case wifi
         case cellular

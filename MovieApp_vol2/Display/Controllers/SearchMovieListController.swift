@@ -6,9 +6,10 @@
 //
 
 import Foundation
-import MovieAppData
 import PureLayout
-
+/**
+ Displays movie overview cells which are displayed when the search bar is in focus.
+ */
 class SearchMovieController : UIViewController {
     var tableView: UITableView!
     private var detailsPage: MovieDetailsController!
@@ -33,6 +34,9 @@ class SearchMovieController : UIViewController {
         
     }
     
+    /**
+     Sets the navigation view's title to _TMDB_.
+     */
     private func initializeNavigationView() {
         let title = UILabel()
         
@@ -61,6 +65,9 @@ class SearchMovieController : UIViewController {
         searchBar.delegate = self
     }
     
+    /**
+     Configures the view' layout.
+     */
     private func addConstraints() {
         searchBar.autoPinEdge(toSuperviewEdge: .top, withInset: 22)
         searchBar.autoPinEdge(toSuperviewEdge: .leading, withInset: 18)
@@ -72,6 +79,9 @@ class SearchMovieController : UIViewController {
         tableView.autoPinEdge(toSuperviewEdge: .bottom)
     }
     
+    /**
+     Styles the view.
+     */
     private func styleViews() {
         view.backgroundColor = .white
         
@@ -126,7 +136,9 @@ class SearchMovieController : UIViewController {
     }
 }
 
-
+/**
+Handles search bar actions.
+ */
 extension SearchMovieController : UITableViewDataSource {
         
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

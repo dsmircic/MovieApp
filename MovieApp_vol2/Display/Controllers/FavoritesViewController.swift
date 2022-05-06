@@ -7,6 +7,9 @@
 
 import Foundation
 import UIKit
+/**
+ Will contain favorite movies in the future.
+ */
 class FavoritesViewController: UIViewController {
     
     override func viewDidLoad() {

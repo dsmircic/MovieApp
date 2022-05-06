@@ -13,6 +13,9 @@ import Foundation
 class NetworkService {
     private var dataTask: URLSessionDataTask?
 
+    /**
+     Executes the url request which is passed in as a parameter and notifies the user about the outcome. _success()_ if the url request gets executed and _failure()_ if the url request fails.
+     */
     func executeUrlRequest<T: Decodable>(_ request: URLRequest, completionHandler: @escaping (Result<T, RequestError>) -> Void) {
         let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
             

@@ -6,11 +6,12 @@
 //
 
 import PureLayout
-import MovieAppData
 import Foundation
-
+/**
+ Displays tableview cells with the movie category data including movie posters, subcategories and category name.
+ */
 class InitialMovieListController : UIViewController {
-    var tableView: UITableView!
+    private var tableView: UITableView!
     
     private var searchBar: UISearchBar!
     private var tabBar: UITabBarController!
@@ -75,6 +76,9 @@ class InitialMovieListController : UIViewController {
         navigationItem.titleView = title
     }
     
+    /**
+     Initializes view components.
+     */
     private func createViews() {
         tabBar = UITabBarController()
         
@@ -93,6 +97,9 @@ class InitialMovieListController : UIViewController {
         tableView.delegate = self
     }
 
+    /**
+     Configures view' layout.
+     */
     private func addConstraints() {
         tableView.autoPinEdge(.top, to: .bottom, of: searchBar, withOffset: 8)
         tableView.autoPinEdge(toSuperviewEdge: .leading)
@@ -104,6 +111,9 @@ class InitialMovieListController : UIViewController {
         searchBar.autoPinEdge(toSuperviewEdge: .trailing, withInset: 19)
     }
     
+    /**
+     Styles the view.
+     */
     private func styleViews() {
         view.backgroundColor = .white
         
@@ -131,6 +141,9 @@ class InitialMovieListController : UIViewController {
         navigationController?.navigationBar.tintColor = .systemGreen
     }
     
+    /**
+     Opens a view containing movie details.
+     */
     func showDetailsPage() {
         navigationController?.pushViewController(detailsPage, animated: true)
     }
@@ -306,6 +319,9 @@ extension InitialMovieListController : UITableViewDataSource {
         return MovieCategory.allCases.count - 1
     }
     
+    /**
+     Dequeue's a custom table view cell _MovieCategoryCell_ and configures it depending on the row which the table view is in.
+     */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieCategoryCell.identifier,
                                                  for: indexPath) as? MovieCategoryCell else {
@@ -345,7 +361,6 @@ extension InitialMovieListController : UITableViewDataSource {
         }
         
         subcategories = findItemsForCategory(category: category)
-        
         configureCell(cell: cell, category: category, subcategories: subcategories, urls: urls, ids: ids)
         
         return cell

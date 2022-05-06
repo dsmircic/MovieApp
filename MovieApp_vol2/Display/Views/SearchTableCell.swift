@@ -25,10 +25,16 @@ class SearchTableCell : UITableViewCell {
         styleView()
     }
     
+    /**
+     Configures the view's layout.
+     */
     private func addConstraints() {
         movieDescriptionContainer.autoPinEdgesToSuperviewEdges()
     }
     
+    /**
+     Styles the view's components.
+     */
     private func styleView() {
         backgroundColor = .clear
         
@@ -47,11 +53,17 @@ class SearchTableCell : UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /**
+     Deletes the cells contents once it gets out of the screen.
+     */
     override func prepareForReuse() {
         super.prepareForReuse()
         movieDescriptionContainer.deleteContent()
     }
     
+    /**
+     Configures the cell with the given poster url, movie title and description label.
+     */
     public func configure(posterUrl: URL, movieTitle: String, description: String) {
         movieDescriptionContainer.configure(imageURL: posterUrl, title: movieTitle, description: description)
     }

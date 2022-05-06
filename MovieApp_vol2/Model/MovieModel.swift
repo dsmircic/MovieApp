@@ -6,6 +6,9 @@
 //
 import Foundation
 
+/**
+ Contains movie search resutls which are fetched from the _TMDB_ database.
+ */
 struct ModelMovie: Codable {
     let page: Int?
     let results: [Movie]
@@ -20,6 +23,9 @@ struct ModelMovie: Codable {
     }
 }
 
+/**
+ Contains movie search results for trening movies which are fetched from the _TMDB_ database.
+ */
 struct TrendingModelMovie: Codable {
     let page: Int
     let results: [TrendingMovie]
@@ -34,6 +40,9 @@ struct TrendingModelMovie: Codable {
     }
 }
 
+/**
+ Contains movie details which are fetched from the _TMDB_ database.
+ */
 struct Movie: Codable {
     let adult: Bool
     let backdropPath: String
@@ -69,6 +78,9 @@ struct Movie: Codable {
     
 }
 
+/**
+ Contains trending movie details which are fetched from the _TMDB_ database.
+ */
 struct TrendingMovie: Codable {
     let adult: Bool
     let backdropPath: String
@@ -106,6 +118,9 @@ struct TrendingMovie: Codable {
     
 }
 
+/**
+ Contains production company details which are fetched from the _TMDB_ details.
+ */
 struct ProductionCompany: Codable {
     let id: Int
     let logoPath: String?
@@ -121,6 +136,9 @@ struct ProductionCompany: Codable {
     
 }
 
+/**
+ Contains the country details which are fetched from the _TMDB_ database.
+ */
 struct Country: Codable {
     let iso: String?
     let name: String?
@@ -132,6 +150,9 @@ struct Country: Codable {
     
 }
 
+/**
+ Contains language details which are fetched from the _TMDB_ database.
+ */
 struct Language: Codable {
     let englishName: String?
     let iso: String?
@@ -145,6 +166,9 @@ struct Language: Codable {
     
 }
 
+/**
+ Contains details about the movie collection the movie is in from the _TMDB_ details.
+ */
 struct MovieCollection: Codable {
     let id: Int?
     let name: String?
@@ -160,6 +184,9 @@ struct MovieCollection: Codable {
 
 }
 
+/**
+ Contains genre details which are fetched from the _TMDB_ database.
+ */
 struct Genre: Codable {
     let id: Int
     let name: String
@@ -170,6 +197,9 @@ struct Genre: Codable {
     }
 }
 
+/**
+ Contains multiple genre details which are fetched from the _TMDB_ database.
+ */
 struct Genres: Codable {
     let genres: [Genre]
     
@@ -178,7 +208,9 @@ struct Genres: Codable {
     }
 }
 
-
+/**
+ Contains movie details which are fetched from the _TMDB_ database.
+ */
 struct MovieDetails: Codable {
     let adult: Bool?
     let backdropPath: String?
@@ -235,6 +267,9 @@ struct MovieDetails: Codable {
     }
 }
 
+/**
+ Contains movie category names.
+ */
 enum MovieCategory: CaseIterable {
     case popular
     case recommended

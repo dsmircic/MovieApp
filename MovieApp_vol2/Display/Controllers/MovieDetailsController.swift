@@ -7,13 +7,20 @@
 
 import Foundation
 import UIKit
-
+/**
+ Contains details about the movie including the movie poster, overview, title, release date and user score.
+ */
 class MovieDetailsController : UIViewController {
     private let titleFont = UIFont(name: "HelveticaNeue-Bold", size: 24)
     private let descriptionFont = UIFont(name: "Proxima Nova", size: 14)
     
+    private var topView: UIView = UIView()
+    private var bottomView: UIView = UIView()
+    private var networkService: NetworkService = NetworkService()
+    private var movieDetails: MovieDetails?
+    
     private var stackView: UIStackView = {
-        var stackView = UIStackView()
+        let stackView = UIStackView()
         
         stackView.axis = .vertical
         stackView.alignment = .fill
@@ -22,12 +29,6 @@ class MovieDetailsController : UIViewController {
         
         return stackView
     }()
-    
-    private var topView: UIView = UIView()
-    private var bottomView: UIView = UIView()
-    
-    private var networkService: NetworkService = NetworkService()
-    private var movieDetails: MovieDetails?
     
     private var movieTitle: UILabel = {
         let titleLabel = UILabel()
@@ -155,14 +156,19 @@ class MovieDetailsController : UIViewController {
         styleView()
     }
     
+    /**
+     Initializes view components.
+     */
     private func initialize() {
         networkService = NetworkService()
         
         topView = UIView()
         bottomView = UIView()
-
     }
     
+    /**
+     Sets the navigation view's title to _TMDB_.
+     */
     private func initializeNavigationView() {
         let title = UILabel()
         
@@ -173,6 +179,9 @@ class MovieDetailsController : UIViewController {
         navigationItem.titleView = title
     }
     
+    /**
+     Configures all textual components once the movie details data is fetched.
+     */
     private func configureText() {
         movieTitle.text = movieDetails?.title
         movieDescription.text = movieDetails?.overview
@@ -209,12 +218,17 @@ class MovieDetailsController : UIViewController {
         }
     }
     
-    
+    /**
+     Configures the view components once the movie details data is fetched.
+     */
     private func configureView() {
         configureText()
         configureImage()
     }
     
+    /**
+     Creates a url request for fetching movie details data and executes it. The movie details data is stored in a class variable _movieDetails_.
+     */
     private func fetchMovieDetails(movieId: Int) {
         let base = "https://api.themoviedb.org/3/"
         let key = "ba92a6994b75de1c153255ddb4932fdf"
@@ -243,6 +257,9 @@ class MovieDetailsController : UIViewController {
         }
     }
         
+    /**
+     Initializes view components.
+     */
     private func createView() {
         topView.addSubview(poster)
         
@@ -266,6 +283,9 @@ class MovieDetailsController : UIViewController {
         view.addSubview(stackView)
     }
     
+    /**
+     Configures the view's layout.
+     */
     private func addConstraints() {
         poster.autoPinEdgesToSuperviewEdges()
         
@@ -319,6 +339,9 @@ class MovieDetailsController : UIViewController {
         stackView.autoPinEdgesToSuperviewEdges()
     }
     
+    /**
+     Styles the view.
+     */
     private func styleView() {
         view.backgroundColor = .white
         
@@ -335,7 +358,9 @@ class MovieDetailsController : UIViewController {
         overviewLabel.font = titleFont
     }
     
-    
+    /**
+     Creates an url request for fetching a movie poster and executes it, the movie poster gets stored in a class variable _poster_.
+     */
     private func configureImage() {
         let base = "https://image.tmdb.org/t/p/original"
         let url = URL(string: base + (movieDetails?.posterPath ?? ""))
@@ -362,6 +387,9 @@ class MovieDetailsController : UIViewController {
         }.resume()
     }
     
+    /**
+     Receives a movie ID for the movie which needs to be fetched from the parent view controller. (InitialMovieListViewController or SearchMovieListViewController).
+     */
     public func configure(id: Int) {
         self.poster.image = nil
         self.movieTitle.text = nil

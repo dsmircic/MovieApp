@@ -36,6 +36,9 @@ class MoviePosterCell : UICollectionViewCell {
         styleView()
     }
     
+    /**
+     Configures the view's layout.
+     */
     private func addConstraints() {
         poster.autoPinEdgesToSuperviewEdges()
         
@@ -44,6 +47,9 @@ class MoviePosterCell : UICollectionViewCell {
         favoriteButton.autoSetDimensions(to: CGSize(width: 32, height: 32))
     }
     
+    /**
+     Styles the view.
+     */
     private func styleView() {
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 8
@@ -61,6 +67,9 @@ class MoviePosterCell : UICollectionViewCell {
         poster.image = nil
     }
     
+    /**
+     Configures the collection view's cell with the given poster image and id.
+     */
     public func configure(imageUrl: URL, id: Int) {
         URLSession.shared.dataTask(with: imageUrl) { (data, response, error) in
             
