@@ -118,7 +118,7 @@
 		10B252FE27FE4C1700E74243 = {
 			isa = PBXGroup;
 			children = (
-				10B2530927FE4C1700E74243 /* MovieApp_vol2 */,
+				10B2530927FE4C1700E74243 /* MovieApp_vol3 */,
 				10B2530827FE4C1700E74243 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -131,7 +131,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		10B2530927FE4C1700E74243 /* MovieApp_vol2 */ = {
+		10B2530927FE4C1700E74243 /* MovieApp_vol3 */ = {
 			isa = PBXGroup;
 			children = (
 				106EEEC82820008A00E8AC5A /* Model */,
@@ -144,7 +144,7 @@
 				10B2531527FE4C1C00E74243 /* LaunchScreen.storyboard */,
 				10B2531827FE4C1C00E74243 /* Info.plist */,
 			);
-			path = MovieApp_vol2;
+			path = MovieApp_vol3;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
